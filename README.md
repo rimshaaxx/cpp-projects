@@ -8,7 +8,7 @@ Made using:
 - ANSI escape codes to hide, move, and show the cursor
 - `rand()` and `time()` for random ghost responses
 
-...and yehh that's pretty much it. 😭
+...and yehh that's pretty much it. 
 
 ## 🛠️ How to Run
 
