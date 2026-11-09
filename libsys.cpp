@@ -106,9 +106,11 @@ class Book {
             std::cin >> price;
 
             while (price < 0) {
-                std::cout <<"Price cannot be negative.\nEnter price again: ";
+                std::cout <<"Price cannot be negative. Enter price again: ";
                 std::cin >> price;
             }
+
+            std::cin.ignore();
 
             std::cout << "\nEnter number of copies available: ";
             std::cin >> copies;
@@ -134,20 +136,22 @@ class Book {
             std::cout << "\n────────୨ৎ────────" << std::endl ;
         }
 
-        void menu(int choice) {
+        int menu() {
+            int choice;
             SetConsoleOutputCP(CP_UTF8);
             std::cout << "────────୨Choose an optionৎ────────" ;
             std::cout << "\n1. Enter book details." ;
             std::cout << "\n2. Display book details." ;
             std::cout << "\n3. Borrow book." ;
             std::cout << "\n4. Return book." ;
-            std::cout << "\n5. Exit program." ;
+            std::cout << "\n5. Exit program.\nEnter choice: " ;
             std::cin >> choice ;
 
-            while (choice < 0 || choice > 5) {
+            while (choice < 1 || choice > 5) {
                 std::cout << "\nInvalid choice. Enter again: ";
                 std::cin >> choice ;
             }
+            return choice;
         }
 
         void borrow_book() {
@@ -161,12 +165,15 @@ class Book {
             copies++;
         }
 
+        //-----DESTRUCTOR FUNCTION-----
         ~Book () {
             std::cout << "Book is destroyed." << std::endl;
         }
 };
 
 int main() {
+    SetConsoleOutputCP(CP_UTF8);
+
     // -----DEFAULT CONSTRUCTOR CALLED.-----
     Book b1, b2, b3;
 
@@ -178,28 +185,55 @@ int main() {
     Book b6(b1);
 
     // -----SHOW COPY CONSTRUCTOR WORKED-----
+    std::cout << "═══════COPY CONSTRUCTOR DISPLAYING DEFAULT CNSTRUCTOR═══════\n\n";
     b6.display_book();
 
     // -----WHY NOT SEE OTHER BOOKS TOO-----
+    std::cout << "═══════PARAMETERIZED CONSTRUCTOR DISPLAYED═══════\n\n";
     b4.display_book();
     b5.display_book();
 
-    int choice = 0;
-    b2.menu(choice);
+    std::cout << "═══════DEMONSTRATING SETTERS AND GETTERS═══════\n\n";
+    b2.set_ID("BK-#-57");
+    b2.get_ID();
+
+    b2.set_Title("Never Lie");
+    b2.get_Title();
+
+    b2.set_Author("Freida McFadden");
+    b2.get_Author();
+
+    b2.set_copies(40);
+    b2.get_copies();
+
+    b2.set_price(6767.67);
+    b2.get_price();
+
+    b2.display_book();
+
+    //------INPUT FUNCTION-----
+    b3.input_book();
+    b3.display_book();
+
+    int choice = b3.menu();
     
     if (choice == 1) {
-        b2.input_book();
+        b3.input_book();
     }
     else if (choice == 2) {
-        b2.display_book();
+        b3.display_book();
     }
     else if (choice == 3) {
-        b2.borrow_book();
+        b3.borrow_book();
     }
     else if (choice == 4) {
-        b2.return_book();
+        b3.return_book();
     }
-    else if (choice == 5) {
-        std::cout << "Exiting."<<std::endl;
-    }
+    
+    do{
+        int choice = b3.menu();
+    } while (choice != 5);
+
+    std::cout << "Exiting."<<std::endl;
+
 }
