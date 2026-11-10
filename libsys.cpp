@@ -105,8 +105,8 @@ class Book {
             std::cout << "\nEnter book price: ";
             std::cin >> price;
 
-            while (price < 0) {
-                std::cout <<"Price cannot be negative. Enter price again: ";
+            while (price <= 0) {
+                std::cout <<"Price cannot be negative or zero. Enter price again: ";
                 std::cin >> price;
             }
 
@@ -215,23 +215,23 @@ int main() {
     b3.input_book();
     b3.display_book();
 
-    int choice = b3.menu();
-    
-    if (choice == 1) {
-        b3.input_book();
-    }
-    else if (choice == 2) {
-        b3.display_book();
-    }
-    else if (choice == 3) {
-        b3.borrow_book();
-    }
-    else if (choice == 4) {
-        b3.return_book();
-    }
-    
+    int choice;
     do{
-        int choice = b3.menu();
+        choice = b3.menu();
+    
+        if (choice == 1) {
+            b3.input_book();
+        }
+        else if (choice == 2) {
+            b3.display_book();
+        }
+        else if (choice == 3) {
+            b3.borrow_book();
+        }
+        else if (choice == 4) {
+            b3.return_book();
+        }
+    
     } while (choice != 5);
 
     std::cout << "Exiting."<<std::endl;
