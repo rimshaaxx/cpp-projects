@@ -10,7 +10,7 @@ class Car {
         std::string regNo;
         int mfg;
         std::string fuel_type;
-        double price;
+        long price;
         int mileage;
         int car_age;
 
@@ -23,13 +23,13 @@ class Car {
             regNo = "LEA-1234";
             mfg = 2021;
             fuel_type = "Petrol";
-            price = 55000000;
+            price = 550000;
             mileage = 35000;
         }
         
         //------PARAMETERIZED CONSTRUCTOR-----
 
-        Car (std::string car_id, std::string car_brand, std::string car_model, std::string car_regNo, int car_mfg, std::string car_fuel_type, double car_price, int car_mileage) {
+        Car (std::string car_id, std::string car_brand, std::string car_model, std::string car_regNo, int car_mfg, std::string car_fuel_type, long car_price, int car_mileage) {
             ID = car_id;
             brand = car_brand;
             model = car_model;
@@ -147,8 +147,16 @@ class Car {
             }
             std::cout << "\nEnter price: ";
             std::cin >> price ;
+            while ( price <= 0 ) {
+                std::cout << "\nInvalid price. Enter price again: ";
+                std::cin >> price ;
+            }
             std::cout << "\nEnter mileage: ";
             std::cin >> mileage;
+            while ( mileage < 0 ) {
+                std::cout << "\nMileage cannot be negative. Enter again: ";
+                std::cin >> mileage ;
+            }
 
             std::cout << "─────────────────୨ৎ─────────────────\n\n" ;
         }
@@ -172,13 +180,24 @@ class Car {
             std::cout << "\nFuel type: " << fuel_type ;
             std::cout << "\nPrice: " << price ;
             std::cout << "\nMileage: " << mileage;
-            std::cout << "\ncar age: " << car_age;
+            std::cout << "\ncar age: " << car_age << " years.";
 
             std::cout << "\n\n────────୨ৎ────────" ;
         }
 
-        void comparePrice() {
-            
+        //-----COMPARE TWO OBJECTS-------
+        void comparePrice(const Car& another_car) {
+            SetConsoleOutputCP(CP_UTF8);
+            std::cout << "\n────────୨PRICE COMPARISONৎ────────";
+
+            if (price > another_car.price) {
+                std::cout << "\n" << brand << " " << model << " is more expensive than " << another_car.brand << " " << another_car.model ;
+
+            }
+            else if (price < another_car.price) {
+                std::cout << "\n" << another_car.brand << " " << another_car.model << " is more expensive than " << brand << " " << model ;
+
+            }
         }
 
         //-----DESTRUCTOR FUNCTION-----
@@ -190,42 +209,51 @@ class Car {
 
 int main () {
     //-----DEFAULT CONSTRUCTOR DISPLAY----
-    Car v1;
-    v1.calculateRent();
-    v1.display_Car();
+    std::cout << "\nDefault Constructor: \n";
+    Car c1;
+    c1.calculateAge();
+    c1.display_Car();
 
-    //-----PARAMETERIZED CONNSTRUCTOR DISPLAY-----
-    Car v2("VH-102", "Honda" , "Civic" , "LEA-3045" , 7000, 5) ;
-    v2.calculateRent();
-    v2.display_Car();
+    //-------PARAMETERIZED CONSTRUCTOR DISPLAY------
+    std::cout << "\nParamaterized Constructor: \n";
+    Car c2("C-102" , "Suzuki" , "Alto VXR" , "LEA-20-9012" , 2000 , "Petrol" , 2450550 , 5200) ;
+    c2.calculateAge();
+    c2.display_Car();
 
-    //-----COPY CONSTRUCTOR DISPLAY-----
-    Car v3(v1);
-    v3.calculateRent();
-    v3.display_Car();
+    //------COPY CONSTRUCTOR-------
+    std::cout << "\nCopy constructor with modified price. \n";
+    Car c4(c2);
+    //(modeified price of copied object)
+    c4.set_price(34676776);
+    c4.get_price();
+    c4.calculateAge();
+    c4.display_Car();
 
-    //-----SETTERS AND GETTERS-----
-    Car v4;
-    v4.set_ID("VH-103");
-    v4.get_ID();
-    v4.set_brand("Suzuki");
-    v4.get_brand();
-    v4.set_model("alto");
-    v4.get_model();
-    v4.set_regNo("LEC-1098");
-    v4.get_regNo();
-    v4.set_mfg(3000);
-    v4.get_mfg();
-    v4.set_fuel_type(2);
-    v4.get_fuel_type();
-    v4.calculateRent();
-    v4.display_Car();
+    //-----COMPARE PRICES OF TWO OBJECTS-----
+    std::cout << "Prices comparison of two objects.\n";
+    c4.comparePrice(c1);
 
-    //-----TAKE INPUT FROM USER----
-    Car v5;
-    v5.inputCar();
-    v5.calculateRent();
-    v5.display_Car();
+    //------SETTERS AND GETTERS-------
+    std::cout << "\n\nAll setters and getters functions. \n";
+    Car c3;
+    c3.set_ID("C-104");
+    c3.get_ID();
+    c3.set_brand("Toyota");
+    c3.get_brand();
+    c3.set_model("Prius S");
+    c3.get_model();
+    c3.set_mfg(1906);
+    c3.get_mfg();
+    c3.set_price(34567834567);
+    c3.get_price();
+    c3.set_regNo("C-SS-456");
+    c3.get_regNo();
+    c3.set_fuel_type("Diesel");
+    c3.get_fuel_type();
+    c3.set_mileage(9878);
+    c3.get_mileage();
+    c3.calculateAge();
+    c3.display_Car();
 
     return 0;
 }
